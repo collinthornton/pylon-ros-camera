@@ -181,6 +181,11 @@ bool PylonGigEAce2Camera::applyCamSpecificStartupSettings(const PylonCameraParam
                 cam_->UserSetSelector.SetValue(Basler_UniversalCameraParams::UserSetSelector_UserSet1);
                 cam_->UserSetLoad.Execute();
                 cam_->GevSCPSPacketSize.SetValue(parameters.mtu_size_);
+
+                // Override all streams to multicast transmissions
+                cam_->GetStreamGrabberParams().TransmissionType.SetValue(
+                    Basler_UniversalStreamParams::TransmissionType_Multicast);
+
                 ROS_WARN("User Set 1 Loaded");
             } 
         else if (parameters.startup_user_set_ == "UserSet2")
